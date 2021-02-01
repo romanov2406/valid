@@ -1,0 +1,18 @@
+{
+  "users": [
+    {
+      "img": "https://firebasestorage.googleapis.com/v0/b/fir-training-f9ed7.appspot.com/o/images%2Fimages%20(1).jfif?alt=media&token=80ab6df6-8944-4388-a29e-ef1590de2990",
+      "firstName": "Maximnn",
+      "lastName": "kutelmakh",
+      "userName": "weewew",
+      "phone": "950325874",
+      "email": "rmnov2406@gmail.com",
+      "password": "qwerty",
+      "addressType": "Home",
+      "address": "Home",
+      "city": "Lviv",
+      "postalCode": "60524",
+      "id": 1
+    }
+  ]
+}

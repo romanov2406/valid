@@ -1,0 +1,20 @@
+form{
+    width: 500px;
+    select{
+        border: none;
+        outline: none;
+        width: 100%;
+        cursor: pointer;
+    }
+}
+
+.invalid{
+    margin-bottom: 5px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    width: 60px;
+    display: flex;
+    justify-content: center;
+    border-radius: 4px;
+}

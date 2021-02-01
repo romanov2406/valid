@@ -1,0 +1,10 @@
+<div class="card"  style="margin: 0 auto; width: 300px;">
+    <img style="height: 50%;" src="https://static.hollywoodreporter.com/sites/default/files/2014/07/john_travolta_a_p.jpg" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{localUser?.firstName}}</h5>
+      <h5 class="card-title">{{localUser?.email}}</h5>
+      <p class="card-text">{{localUser?.address}}</p>
+      <p class="card-text">{{localUser?.phone}}</p>
+      <button class="btn btn-warning" (click)="signOut()">Sign Out</button>
+    </div>
+  </div>
