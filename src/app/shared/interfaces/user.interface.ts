@@ -1,6 +1,6 @@
 export interface IUser {
     id: number,
-    img:string,
+    img: string,
     firstName: string,
     lastName: string,
     userName: string,
@@ -10,5 +10,6 @@ export interface IUser {
     addressType: string,
     address: string,
     city: string,
+    country: string,
     postalCode: number
 }

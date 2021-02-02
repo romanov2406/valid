@@ -1,0 +1,26 @@
+.card {
+  display: flex;
+  height: 400px;
+  width: 320px;
+  flex-direction: column;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+
+  .info {
+    text-align: center;
+  }
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  width: 70%;
+  margin: 0 auto;
+  grid-gap: 10px;
+}

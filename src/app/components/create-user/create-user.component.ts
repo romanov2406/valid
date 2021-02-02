@@ -2,14 +2,11 @@ import { CreateUser } from './../../shared/store/action/users.actions';
 import { Store } from '@ngxs/store';
 
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { FormGroupDirective, NgForm } from '@angular/forms';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IUser } from 'src/app/shared/interfaces/user.interface';
 import { countryList } from './../../shared/countries';
 import { AuthService } from './../../shared/services/auth.service';
 import { take } from 'rxjs/operators';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { AngularFireStorage } from '@angular/fire/storage';
 
 
@@ -25,6 +22,9 @@ export class CreateUserComponent implements OnInit {
   users: IUser[] = [];
   upload: any;
   userImage: string;
+  file: any;
+  inputFileValue: string;
+  defaultValidatorsProperties = [Validators.required, Validators.minLength(2), Validators.maxLength(10)];
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
@@ -34,27 +34,33 @@ export class CreateUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.registerForm = this.formBuilder.group({
-      firstName: ['', Validators.required,Validators.minLength(6)],
-      lastName: ['', Validators.required],
+      firstName: ['', this.defaultValidatorsProperties],
+      lastName: ['', this.defaultValidatorsProperties],
       userName: ['', Validators.required],
       phone: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email, Validators.minLength(6)]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      addressType: ['', [Validators.required, Validators.minLength(6)]],
-      address: ['', [Validators.required, Validators.minLength(6)]],
-      city: ['', [Validators.required, Validators.minLength(6)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(2)]],
+      addressType: ['', [Validators.required, Validators.minLength(2)]],
+      address: ['', [Validators.required, Validators.minLength(2)]],
+      city: ['', [Validators.required, Validators.minLength(2)]],
       country: ['', [Validators.required, Validators.minLength(6)]],
-      postalCode: ['', [Validators.required, Validators.minLength(6)]],
+      postalCode: ['', [Validators.required, Validators.minLength(2)]],
     });
     this.getStaticUser();
   }
+
+
+  validateField(selector): boolean {
+    return this.registerForm.controls[selector].status === 'INVALID' && this.registerForm.controls[selector].touched;
+  }
+
 
   getStaticUser(): void {
     this.authService.getJSONUsers().pipe(take(1)).subscribe(
       data => {
         this.users = data;
       }
-    )
+    );
   }
 
   registration(): void {
@@ -70,30 +76,26 @@ export class CreateUserComponent implements OnInit {
       addressType: this.registerForm.controls.addressType.value,
       address: this.registerForm.controls.address.value,
       city: this.registerForm.controls.city.value,
+      country: this.registerForm.controls.country.value,
       postalCode: this.registerForm.controls.postalCode.value,
     }
-    delete USER.id // mutation
-    if (this.users.every(el => el.email !== USER.email)) {
-      this.store.dispatch(new CreateUser(USER));
+    let { id, ...user } = USER
+    if (this.users.every(el => el.email !== user.email)) {
+      this.store.dispatch(new CreateUser(user as IUser));
       alert('success');
       this.getStaticUser();
       this.registerForm.reset();
       this.isNext = false;
+      this.userImage = '';
     } else {
-      alert('Wrong');
+      alert('Something is wrong');
     }
   }
 
-  
-  checkValidation(selector): any {
-   return this.registerForm.controls[selector].touched ? '1px solid red' : '1px solid green';
-  }
-
-
   uploadFile(event): void {
-    const file = event.target.files[0];
-    const filePath = `images/${file.name}`;
-    this.upload = this.afStorage.upload(filePath, file);
+    this.file = event.target.files[0];
+    const filePath = `images/${this.file.name}`;
+    this.upload = this.afStorage.upload(filePath, this.file);
     this.upload.then(image => {
       this.afStorage.ref(`images/${image.metadata.name}`).getDownloadURL().subscribe(url => {
         this.userImage = url;
@@ -105,10 +107,12 @@ export class CreateUserComponent implements OnInit {
   deleteImage(): void {
     this.afStorage.storage.refFromURL(this.userImage).delete()
       .then(() => {
-        alert('success');
+        this.userImage = '';
+        this.inputFileValue = '';
       })
       .catch(err => console.log(err));
   }
+
 
 }
 

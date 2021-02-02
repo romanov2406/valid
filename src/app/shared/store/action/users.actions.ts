@@ -12,11 +12,13 @@ export class CreateUser {
 }
 
 export class Update {
+    static readonly desc = 'update user';
     public static readonly type = '[Users] Update';
     constructor(public readonly user: IUser) { }
 }
 
 export class DeleteUser {
+    static readonly desc = 'delete user';
     public static readonly type = '[Users] Delete';
     constructor(public readonly id: number) { }
 }

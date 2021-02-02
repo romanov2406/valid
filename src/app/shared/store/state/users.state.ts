@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 import { Action, NgxsOnInit, Selector, State, StateContext } from '@ngxs/store';
 import { GetUsers, Update } from '../action/users.actions';
 import { AuthService } from '../../services/auth.service';
-import { AngularFirestore } from '@angular/fire/firestore';
 
 
 export interface usersStateModel {
@@ -21,8 +20,6 @@ export interface usersStateModel {
 
 @Injectable()
 export class UsersState {
-
-
     @Selector()
     static users(state: usersStateModel) {
         return state.users;
@@ -32,12 +29,9 @@ export class UsersState {
         private authService: AuthService
     ) { }
 
-    ngxsOnInit() {}
-    
-
     @Action(GetUsers)
     public getUsers({ patchState }: StateContext<usersStateModel>) {
-        return this.authService.getJSONUsers().pipe(tap(data =>  patchState({ users: data })));
+        return this.authService.getJSONUsers().pipe(tap(data => patchState({ users: data })));
     }
 
     @Action(DeleteUser)

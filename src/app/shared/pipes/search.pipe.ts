@@ -1,5 +1,4 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { IUser } from '../interfaces/user.interface';
 
 @Pipe({
   name: 'search'

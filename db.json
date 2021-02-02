@@ -1,18 +1,47 @@
 {
   "users": [
     {
-      "img": "https://firebasestorage.googleapis.com/v0/b/fir-training-f9ed7.appspot.com/o/images%2Fimages%20(1).jfif?alt=media&token=80ab6df6-8944-4388-a29e-ef1590de2990",
-      "firstName": "Maximnn",
-      "lastName": "kutelmakh",
-      "userName": "weewew",
+      "img": "https://firebasestorage.googleapis.com/v0/b/fir-training-f9ed7.appspot.com/o/images%2Fimages%20(1).jfif?alt=media&token=304e480b-05a4-4c69-962d-257abdff7502",
+      "firstName": "romeo",
+      "lastName": "stepan",
+      "userName": "oleg",
+      "phone": "0154236589",
+      "email": "rendiak24@gmail.com",
+      "password": "qwerty",
+      "addressType": "Home",
+      "address": "Remdg",
+      "city": "Address",
+      "country": "country",
+      "postalCode": "dsdsdssdds",
+      "id": 1
+    },
+    {
+      "firstName": "Maxim",
+      "lastName": "kutelmakhvghjjhg",
+      "userName": "maxi",
       "phone": "950325874",
       "email": "rmnov2406@gmail.com",
       "password": "qwerty",
-      "addressType": "Home",
+      "addressType": "Billing",
       "address": "Home",
       "city": "Lviv",
+      "country": "country",
       "postalCode": "60524",
-      "id": 1
+      "id": 5
+    },
+    {
+      "firstName": "Max155555",
+      "lastName": "Kutelmakh222",
+      "userName": "Max",
+      "phone": "787878978978",
+      "email": "1245dfgd@gmai1l.com",
+      "password": "1111",
+      "addressType": "Billingjjj",
+      "address": "Remdg",
+      "city": "sddsds",
+      "country": "country",
+      "postalCode": "dsdsdssdds",
+      "id": 6
     }
   ]
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from './../interfaces/user.interface';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
 export class AuthService {
   users: IUser[] = [];
   url = 'http://localhost:3000/users';
+  userStatusChanges: Subject<boolean> = new Subject();
+
+
   constructor(private http: HttpClient, private route: Router) { }
 
 
@@ -28,7 +31,8 @@ export class AuthService {
         const USER = data.filter(el => el.email === email && el.password === password);
         if (USER[0]) {
           localStorage.setItem('user', JSON.stringify(USER[0]));
-          this.route.navigateByUrl('user-profile');
+          this.userStatusChanges.next(true);
+          this.route.navigateByUrl('profile/user-profile');
         } else {
           alert('User not defined');
         }
@@ -44,4 +48,5 @@ export class AuthService {
   updateJSONUser(user: IUser): Observable<IUser> {
     return this.http.put<IUser>(`${this.url}/${user.id}`, user);
   }
+
 }

@@ -1,30 +1,32 @@
 <div class="conntainer-fluid d-flex justify-content-center">
-  <form   class="d-flex flex-column" [formGroup]="registerForm" >
+  <form class="d-flex flex-column" [formGroup]="registerForm">
 
 
     <!-- First Form -->
     <div *ngIf="!isNext" class="form-group">
-      <input type="file" (change)="uploadFile($event)">
+      <input type="file"  (change)="uploadFile($event)">
       <img [src]="userImage" style="width: 200px;" alt="">
+
       <button class="btn btn-danger" (click)="deleteImage()">Delete</button>
-      <br>
+      <br>  
       <label for="firstName">First Name</label>
-      <input type="text" formControlName="firstName" class="form-control" placeholder="First Name" aria-label="firstName">
-      <div class="invalid" *ngIf="registerForm.controls.firstName.status === 'INVALID'">Wrong</div>
+      <input type="text" formControlName="firstName" [class.invalidForm]="validateField('firstName')" class="form-control" placeholder="First Name" aria-label="firstName">
+
 
       <label for="lastName">Last Name</label>
-      <input type="text" formControlName="lastName" class="form-control" placeholder="Last Name" aria-label="lastName">
+      <input type="text" formControlName="lastName" [class.invalidForm]="validateField('lastName')" class="form-control"
+        placeholder="Last Name" aria-label="lastName">
       <label for="userName">User Name</label>
-      <input type="text" formControlName="userName" class="form-control" placeholder="User Name" aria-label="userName">
+      <input type="text" formControlName="userName" [class.invalidForm]="validateField('userName')" class="form-control"
+        placeholder="User Name" aria-label="userName">
       <label for="phone">Phone</label>
-      <input type="text" formControlName="phone" class="form-control" placeholder="Phone" aria-label="phone">
+      <input type="text" formControlName="phone" [class.invalidForm]="validateField('phone')" class="form-control" placeholder="Phone" aria-label="phone">
       <label for="email">Email</label>
-      <input type="email" formControlName="email" class="form-control" placeholder="Email" aria-label="email">
+      <input type="email" formControlName="email" [class.invalidForm]="validateField('email')" class="form-control" placeholder="Email" aria-label="email">
 
-      <div class="d-flex justify-content-between mt-2">
-        <input type="password" formControlName="password" class="form-control mr-2" placeholder="Password..." aria-label="password">
-        <input type="password" class="form-control" placeholder="Password..." aria-label="password">
-      </div>
+      <label for="password">Password</label>
+        <input type="password" formControlName="password" [class.invalidForm]="validateField('password')" class="form-control mr-2" placeholder="Password..."
+          aria-label="password">
       <button class="btn btn-primary mt-2" (click)="isNext = true">Next</button>
     </div>
 
@@ -33,25 +35,27 @@
 
 
     <div *ngIf="isNext" class="form-group">
-      <select formControlName="addressType">
+      <select formControlName="addressType" [class.invalidForm]="validateField('addressType')">
         <option value="">Addresse Type</option>
         <option value="Home">Home</option>
         <option value="Billing">Billing</option>
         <option value="Shipment">Shipment</option>
+      </select> 
+      <hr>
+      <input type="text" formControlName="address" [class.invalidForm]="validateField('address')" class="form-control mb-2" placeholder="Address" aria-label="address">
+      <hr>
+      <input type="text" formControlName="city" [class.invalidForm]="validateField('city')" class="form-control mb-2" placeholder="City" aria-label="city">
+      
+      <select formControlName="country" [class.invalidForm]="validateField('country')">
+        <option value="">Choose your Country</option>
+        <option value="country" *ngFor="let country of countries">{{country}}</option>
       </select>
       <hr>
-      <input type="text" formControlName="address" class="form-control mb-2" placeholder="Address" aria-label="address">
-      <hr>
-      <input type="text" formControlName="city" class="form-control mb-2" placeholder="City" aria-label="city">
-      <select formControlName="country">
-          <option value="Choose your Country">Choose your Country</option>
-        <option [value]="country" *ngFor="let country of countries">{{country}}</option>
-      </select>
-      <hr>
-      <input formControlName="postalCode" type="text" class="form-control mt-2" placeholder="Postal Code..." aria-label="city">
+      <input formControlName="postalCode" type="text" class="form-control mt-2" placeholder="Postal Code..."
+        aria-label="city">
       <div class="mt-2">
         <button class="btn btn-warning mr-2" (click)="isNext = false">Prev</button>
-        <button class="btn btn-success" (click)="registration()">Next</button>
+        <button class="btn btn-success" (click)="registration()" [disabled]="registerForm.status === 'INVALID' ? true : false">Next</button>
       </div>
     </div>
 

@@ -1,7 +1,9 @@
-import { take } from 'rxjs/operators';
+import { pluck, take } from 'rxjs/operators';
 import { IUser } from './../../shared/interfaces/user.interface';
 import { AuthService } from './../../shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngxs/store';
+import { GetUsers } from 'src/app/shared/store/action/users.actions';
 
 @Component({
   selector: 'app-user-info',
@@ -10,21 +12,29 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserInfoComponent implements OnInit {
 
-  
-  constructor(private authService: AuthService) { }
+
+  constructor(private authService: AuthService, private store: Store) { }
   users: IUser[] = [];
   ngOnInit(): void {
     this.getStaticUsers();
   }
 
-
-
   getStaticUsers(): void {
-    this.authService.getJSONUsers().pipe(take(1)).subscribe(
-      data => {
-        this.users = data;
-      }
+    this.store.dispatch(new GetUsers()).pipe(take(1), pluck('UsersState', 'users')).subscribe(el => {
+      this.users = el;
+    },
+      err => console.log(err)
     );
   }
+
+
+
+  // getStaticUsers(): void {
+  //   this.authService.getJSONUsers().pipe(take(1)).subscribe(
+  //     data => {
+  //       this.users = data;
+  //     }
+  //   );
+  // }
 
 }

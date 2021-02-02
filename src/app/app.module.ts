@@ -22,11 +22,11 @@ import { MainComponent } from './layouts/main/main.component';
 import { MainPageComponent } from './components/main-page/main-page.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
 import { CreateUserComponent } from './components/create-user/create-user.component';
-import { FormBuilder } from '@angular/forms';
 import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { UsersState } from './shared/store/state/users.state';
 import { NgxsModule } from '@ngxs/store';
 import { SearchPipe } from './shared/pipes/search.pipe';
+import { ProfileComponent } from './components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +38,8 @@ import { SearchPipe } from './shared/pipes/search.pipe';
     UserInfoComponent,
     CreateUserComponent,
     UserProfileComponent,
-    SearchPipe
+    SearchPipe,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

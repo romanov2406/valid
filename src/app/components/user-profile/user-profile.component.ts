@@ -11,7 +11,7 @@ export class UserProfileComponent implements OnInit {
   localUser: IUser;
   constructor(private route: Router) { }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     this.getLocalUser();
   }
 
@@ -22,7 +22,7 @@ export class UserProfileComponent implements OnInit {
   signOut(): void {
     localStorage.clear();
     this.localUser = null;
-    this.route.navigateByUrl('create-user')
+    this.route.navigateByUrl('/main')
   }
 
 }

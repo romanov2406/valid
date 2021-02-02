@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   modalRef: BsModalRef;
   users: IUser[] = [];
   loginForm: FormGroup;
+  isLogin:boolean;
   constructor(
     private modalService: BsModalService,
     private authService: AuthService,
@@ -22,7 +23,7 @@ export class HeaderComponent implements OnInit {
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
-   
+
   }
 
   ngOnInit(): void {
