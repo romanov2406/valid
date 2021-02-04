@@ -8,7 +8,7 @@ export class GetUsers {
 export class CreateUser {
     static readonly desc = 'create user';
     static readonly type = '[CreateUser] create user';
-    constructor(public payload: IUser) { }
+    constructor(public readonly payload: IUser) {}
 }
 
 export class Update {
@@ -20,5 +20,10 @@ export class Update {
 export class DeleteUser {
     static readonly desc = 'delete user';
     public static readonly type = '[Users] Delete';
+    constructor(public readonly id: number) { }
+}
+export class GetOneUser {
+    static readonly desc = 'get one user';
+    public static readonly type = '[Users] get one user';
     constructor(public readonly id: number) { }
 }

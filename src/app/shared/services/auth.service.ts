@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IUser } from './../interfaces/user.interface';
 import { Observable, Subject } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import {  take } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -11,14 +12,16 @@ import { Router } from '@angular/router';
 export class AuthService {
   users: IUser[] = [];
   url = 'http://localhost:3000/users';
-  userStatusChanges: Subject<boolean> = new Subject();
+  userStatusChanges = new Subject<boolean>();
 
-
-  constructor(private http: HttpClient, private route: Router) { }
-
+  constructor(private http: HttpClient, private route: Router, private toastr: ToastrService) { }
 
   getJSONUsers(): Observable<Array<IUser>> {
     return this.http.get<Array<IUser>>(this.url);
+  }
+
+  getJSONOneUser(id:number): Observable<IUser> {
+    return this.http.get<IUser>(`${this.url}/${id}`);
   }
 
   registration(user: IUser): Observable<IUser> {
@@ -28,13 +31,15 @@ export class AuthService {
   signIn(email: string, password: string): any {
     return this.http.get<any>(this.url).pipe(take(1)).subscribe(
       data => {
-        const USER = data.filter(el => el.email === email && el.password === password);
-        if (USER[0]) {
-          localStorage.setItem('user', JSON.stringify(USER[0]));
-          this.userStatusChanges.next(true);
+        const USER: IUser = data.find(el => el.email === email && el.password === password);
+        if (USER) {
+          localStorage.setItem('user', JSON.stringify(USER));
           this.route.navigateByUrl('profile/user-profile');
+          this.toastr.success('Success', 'Great!!!');
+          this.userStatusChanges.next(true);
         } else {
           alert('User not defined');
+          this.toastr.error('Error', 'User not defined');
         }
       },
       err => console.log(err)
@@ -47,6 +52,11 @@ export class AuthService {
 
   updateJSONUser(user: IUser): Observable<IUser> {
     return this.http.put<IUser>(`${this.url}/${user.id}`, user);
+  }
+  signOut(): void {
+    localStorage.removeItem('user')
+    this.userStatusChanges.next(true)
+    this.route.navigateByUrl('/main')
   }
 
 }

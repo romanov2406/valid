@@ -1,3 +1,4 @@
+
 export interface IUser {
     id: number,
     img: string,
@@ -7,9 +8,14 @@ export interface IUser {
     phone: string,
     email: string,
     password: string,
+    address: Array<IAddress>
+}
+
+
+export interface IAddress {
     addressType: string,
     address: string,
     city: string,
     country: string,
-    postalCode: number
+    postalCode: string,
 }

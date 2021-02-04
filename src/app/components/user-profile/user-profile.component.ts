@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { IUser } from './../../shared/interfaces/user.interface';
 import { Router } from '@angular/router';
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class UserProfileComponent implements OnInit {
   localUser: IUser;
-  constructor(private route: Router) { }
+  constructor(private route: Router,private authService: AuthService) { }
 
   ngOnInit(): void {
     this.getLocalUser();
@@ -19,10 +20,8 @@ export class UserProfileComponent implements OnInit {
     this.localUser = JSON.parse(localStorage.getItem('user'));
   }
 
-  signOut(): void {
-    localStorage.clear();
-    this.localUser = null;
-    this.route.navigateByUrl('/main')
+  singOut():void{
+    this.authService.signOut();
   }
 
 }

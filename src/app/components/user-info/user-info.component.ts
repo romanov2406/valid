@@ -11,30 +11,26 @@ import { GetUsers } from 'src/app/shared/store/action/users.actions';
   styleUrls: ['./user-info.component.scss']
 })
 export class UserInfoComponent implements OnInit {
-
-
-  constructor(private authService: AuthService, private store: Store) { }
   users: IUser[] = [];
+
+  constructor(
+    private store: Store
+  ) { }
+
   ngOnInit(): void {
     this.getStaticUsers();
   }
 
   getStaticUsers(): void {
-    this.store.dispatch(new GetUsers()).pipe(take(1), pluck('UsersState', 'users')).subscribe(el => {
-      this.users = el;
-    },
-      err => console.log(err)
-    );
+    this.store
+      .dispatch(new GetUsers())
+      .pipe(take(1), pluck('UsersState', 'users'))
+      .subscribe(el => {
+        this.users = el;
+      },
+        err => console.log(err)
+      );
   }
 
-
-
-  // getStaticUsers(): void {
-  //   this.authService.getJSONUsers().pipe(take(1)).subscribe(
-  //     data => {
-  //       this.users = data;
-  //     }
-  //   );
-  // }
 
 }

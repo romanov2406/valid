@@ -1,8 +1,9 @@
-<div>
+<div class="conteiner">
   <input type="text" [(ngModel)]="searchField"
     style="width: 100%; border: none; outline: none; margin-bottom: 20px; border-bottom: 1px solid rgb(235, 233, 233);"
     placeholder="Search...">
   <hr>
+  <h3>Edit User Table</h3>
   <table class="table">
 
     <thead>
@@ -12,11 +13,7 @@
         <th scope="col">User Name</th>
         <th scope="col">Phone</th>
         <th scope="col">Email</th>
-        <th scope="col">Addresse Type</th>
-        <th scope="col">Country</th>
-        <th scope="col">City</th>
-        <th scope="col">Postal Code</th>
-        <th scope="col">Adresse</th>
+
         <th scope="col">Edit</th>
         <th scope="col">Delete</th>
       </tr>
@@ -28,17 +25,54 @@
         <td>{{user?.userName}}</td>
         <td>{{user?.phone}}</td>
         <td>{{user?.email}}</td>
-        <td>{{user?.addressType}}</td>
-        <td>{{user?.country}}</td>
-        <td>{{user?.city}}</td>
-        <td>{{user?.postalCode}}</td>
-        <td>{{user?.address}}</td>
+
         <td><button class="btn btn-warning" (click)="openModal(template)" (click)="edit(user)">Edit</button></td>
-        <td><button class="btn btn-danger" (click)="deleteUser(user)">Delete</button></td>
+        <td><button class="btn btn-danger" (click)="openModal(delete)">Delete</button></td>
+        <ng-template #delete>
+          <div class="model-window">
+            <div>
+              <button class="btn btn-warning mr-2" (click)="modalRef.hide()">No i do not</button>
+              <button class="btn btn-danger" (click)="deleteUser(user)" (click)="modalRef.hide()">Yes i sure</button>
+            </div>
+          </div>
+        </ng-template>
+      </tr>
+    </tbody>
+  </table>
+  <hr>
+
+</div>
+
+
+
+<div class="mt-5">
+  <h3>Edit User  Address Tabe</h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Addresse Type</th>
+        <th scope="col">Country</th>
+        <th scope="col">City</th>
+        <th scope="col">Postal Code</th>
+        <th scope="col">Adresse</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let address of addressOfUsers">
+        <td>{{address?.addressType}}</td>
+        <td>{{address?.country}}</td>
+        <td>{{address?.city}}</td>
+        <td>{{address?.postalCode}}</td>
+        <td>{{address?.address}}</td>
+        <td><button class="btn btn-warning">Edit</button></td>
+        <td><button class="btn btn-danger">Delete</button></td>
       </tr>
     </tbody>
   </table>
 </div>
+
 
 
 <ng-template #template>
@@ -73,6 +107,9 @@
       <label for="address">address</label>
       <input type="text" formControlName="address" class="form-control mb-2" placeholder="address" aria-label="address">
 
+      <label for="country">Country</label>
+      <input type="text" formControlName="country" class="form-control mb-2" placeholder="country" aria-label="address">
+
       <label for="email">City</label>
       <input type="text" formControlName="city" class="form-control mb-2" placeholder="City" aria-label="city">
 
@@ -80,7 +117,8 @@
       <input type="text" formControlName="postalCode" class="form-control mb-2" placeholder="postalCode"
         aria-label="postalCode">
 
-      <button class="btn btn-success mt-2" (click)="modalRef.hide()" (click)="saveUser()">Save</button>
+      <button class="btn btn-success mt-2" (click)="modalRef.hide()" (click)="saveUser()"
+        [disabled]="editForm.status === 'INVALID'">Save</button>
     </form>
   </div>
 </ng-template>

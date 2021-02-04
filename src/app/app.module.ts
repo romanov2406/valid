@@ -6,6 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ToastrModule } from 'ngx-toastr';
+
 
 
 import { AngularFireModule } from '@angular/fire';
@@ -27,6 +29,7 @@ import { UsersState } from './shared/store/state/users.state';
 import { NgxsModule } from '@ngxs/store';
 import { SearchPipe } from './shared/pipes/search.pipe';
 import { ProfileComponent } from './components/profile/profile.component';
+import { UserDetailsComponent } from './components/user-details/user-details.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     CreateUserComponent,
     UserProfileComponent,
     SearchPipe,
-    ProfileComponent
+    ProfileComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +58,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     AngularFirestoreModule,
     AngularFireStorageModule,
     NgxsModule.forRoot([UsersState]),
-    FormsModule
+    FormsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
